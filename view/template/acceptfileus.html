@@ -1,0 +1,218 @@
+<%: func AcceptFileUSHandler(u datalayer.UserLogin, table map[int][]string,fname string, row int, col int, w io.Writer) %>
+
+
+<%~ "layout.html" %>
+
+<%@ title { %>
+  بررسی فایل
+<% } %> 
+<%@ username { %>
+  <%= u.Fname+" "+u.Lname %>
+<% } %> 
+<%@ style { %>
+    <!-- iCheck -->
+    <link href="/StaticUI/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+<% } %>
+<%@ script { %>
+  <!-- bootstrap-progressbar -->
+  <script src="/StaticUI/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+  <!-- iCheck -->
+  <script src="/StaticUI/vendors/iCheck/icheck.min.js"></script>
+
+  <!-- jQuery Tags Input -->
+  <script src="/StaticUI/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+  <!-- Switchery -->
+  <script src="/StaticUI/vendors/switchery/dist/switchery.min.js"></script>
+  <!-- Select2 -->
+  <script src="/StaticUI/vendors/select2/dist/js/select2.full.min.js"></script>
+  <!-- validator -->
+  <script src="/StaticUI/vendors/validator/validator.js"></script>
+<% } %>
+<%@ myscript { %>
+<script>
+var source = new EventSource(window.location.pathname+"/progress");
+var start = true;
+source.onmessage=function(event){
+  if (start){
+    if (event.data!="0%"){
+     
+      document.getElementById("form").style.display="none";
+      document.getElementById("p-title").innerHTML="خوشه‌بندی داده‌های فایل"
+      document.getElementById("pan-title").innerHTML="عملیات خوشه‌بندی"
+      document.getElementById("progress").style.display="block";
+      document.getElementById("progress-bar").style.width=event.data;
+      document.body.scrollTop = 0;
+      start=false;
+    }
+  }
+  document.getElementById("progress-bar").innerHTML=event.data;
+  document.getElementById("progress-bar").style.width=event.data;
+}
+
+$("#form").on("submit", function (e) {
+
+  var b = !0;
+  var c = validator.checkAll($(this));
+  
+  if (c){
+    e.preventDefault();
+    const myForm = document.getElementById("form");
+    const data = $("#form").serialize();
+    var $self = $(this)
+    $.ajax({
+        url: window.location.pathname+"/Clustering",
+        type: "POST",
+        data : data,
+    }).success( function(res) {
+      if (res.errstatus==true){        
+          // document.getElementById("Err").innerHTML = res.errmsg;
+          // document.getElementById("divErr").style.display="block";
+          alert(res.errmsg);
+      }else{
+          window.location.replace(res.errmsg);
+      }
+    });
+  }
+});
+
+
+</script>
+<% } %>
+
+
+<%@ body { %>
+  <div class="">
+      <div class="page-title">
+        <div class="title_right">
+          <h3 id="p-title">بررسی فایل <%= fname %></h3>
+        </div>
+
+      </div> 
+      
+      <div class="clearfix"></div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2 id="pan-title">سطرهای اولیه فایل دریافت شده</h2>
+              <ul class="nav navbar-left panel_toolbox">    
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+            <form id="form" novalidate>
+              <!-- start record list -->
+              <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <th style="width: 3%">#</th>                        
+                          <% for i:=0 ; i < col ; i++ { %>
+                            <th >
+                              <input type="checkbox" class="flat" name="check_<%= fmt.Sprint(i) %>" checked="checked">
+                              <br> <small>بررسی&nbsp;شود</small>
+                            </th>
+                                                   
+                          <% } %>
+                                                
+                    </thead>
+                    <tbody>
+                        <% keys := make([]int, len(table)) %>
+                        <% ks := 0 %>
+                        <% for k := range table { %>
+                          <%    keys[ks] = k %>
+                          <%  ks++ %>
+                        <% } %>
+                        <% sort.Ints(keys) %>
+
+                        <% for _, k := range keys { %>
+                        <% t := table[k]  %>
+                        <tr>
+                            <td><%= fmt.Sprint(k) %></td>
+                            <% if len(t)==col { %>
+                                <% for c:=0 ; c < col ; c++ { %>
+                                    <td >
+                                    <a><%= t[c] %></a>
+                                    </td>
+                                <% } %>
+                            <% }else { %>
+                                <% for c:=0 ; c < len(t) ; c++ { %>
+                                    <td >
+                                    <a><%= t[c] %></a>
+                                    </td>
+                                <% } %>
+                                <% for c:=len(t) ; c < col ; c++ { %>
+                                    <td >
+                                    </td>
+                                <% } %>
+                            <% } %>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+              </div>
+              <!-- end services list -->
+              <br>
+              
+              <div>
+              <div class="radio">
+                <label>
+                  <input type="radio" class="flat" checked="checked" name="check_hdr" value="false"> ردیف اول به عنوان سربرگ در نظر گرفته شود و بررسی نشود
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" class="flat" name="check_hdr" value="true"> ردیف اول به عنوان داده در نظر گرفته شود و بررسی شود
+                </label>
+              </div>
+              </div>
+              <div class="ln_solid"></div>
+              <div class=" item form-group row">
+                <label class="control-label col-md-4 col-sm-4 col-xs-12">تعیین epsilon میکرو خوشه‌ها</label>
+                <div class="col-md-5 col-sm-5 col-xs-12">
+                  <input dir="ltr" type="number" id="number" name="micro_eps" required="required" step="0.1" data-validate-minmax="0,999999999999999" class="form-control col-md-7 col-xs-12">
+                  <!-- <input type="text" class="form-control col-md-7 col-xs-12" min="0" name="micro_eps" data-parsley-type="number" /> -->
+                </div>
+              </div>
+              <br>
+              <div class="item form-group row">
+                <label class="control-label col-md-4 col-sm-4 col-xs-12">تعیین epsilon الگوریتم DBSCAN</label>
+                <div class=" col-md-5 col-sm-5 col-xs-12">
+                  <input dir="ltr" type="number" id="number" name="db_eps"  required="required" step="0.1" data-validate-minmax="0,999999999999999" class="form-control col-md-7 col-xs-12">
+                  <!-- <input type="text" class="form-control col-md-7 col-xs-12" min="0" name="db_eps1" data-parsley-type="number" /> -->
+                </div>
+              </div>
+              <br>
+              <div id="divErr" style="display: none;" class="alert alert-warning alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <div dir="rtl"><strong>خطا: </strong>
+                  <div id="Err"></div>
+                </div>
+                
+              </div>
+              <div class="ln_solid"></div>
+              <div class="form-group">
+                <button id="btn" type="submit" class="btn btn-success btn-lg">آغاز عملیات خوشه بندی</button>
+              </div>
+              <br>
+              <input type="hidden" name="col" value="<%= fmt.Sprint(col) %>">
+            </form>
+            <div id="progress" style="display: none;"  class="row">
+              <br>
+                <h3>میزان پیشرفت عملیات</h3>
+                <br>
+              <div  class="progress">
+                <div  id="progress-bar" class="progress-bar progress-bar-success progress-bar-striped active" data-transitiongoal="1"></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>  
+<% } %>
+

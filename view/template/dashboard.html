@@ -1,0 +1,84 @@
+
+<%: func DashboardHandler(u datalayer.UserLogin, w io.Writer) %>
+
+
+<%~ "layout.html" %>
+
+<%@ title { %>
+    پیش خوان
+<% } %> 
+<%@ username { %>
+  <%= u.Fname+" "+u.Lname %>
+<% } %> 
+<%@ style { %>
+    <!-- iCheck -->
+    <link href="/StaticUI/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+<% } %>
+<%@ script { %>
+  <!-- bootstrap-progressbar -->
+  <script src="/StaticUI/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<% } %>
+
+
+<%@ body { %>
+<div class="">
+  <div class="row">
+    <div class="bs-example" data-example-id="simple-jumbotron">
+      <div class="jumbotron">
+        <h1>سلام  <%= u.Fname %></h1>
+      </br>
+        <h1>به سامانه بـاداده خوش‌آمدید</h1>
+        <p>مژده! مژده! به علت افتتاح این سامانه، در حال حاضر تمامی سرویس‌های این سامانه رایگان می‌باشد.</p>
+      </div>
+    </div>
+  </div>
+  <div class="row tile_count">
+    <a href="/Services">
+      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 tile_stats_count">
+        <span class="count_top"><i class="fa fa-tasks"></i>  سرویس‌های ایجاد شده را مشاهده کن </span>
+        <div class="count">مشاهده سرویس‌ها</div>
+        <div class="clearfix"></div><span class="count_bottom"></span>
+      </div>
+    </a>
+    <a href="/NewService">
+      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 tile_stats_count">
+        <span class="count_top"><i class="fa fa-plus"></i>  به صورت رایگان سرویس جدید ایجاد کن</span>
+        <div class="count">ایجاد سرویس جدید</div>
+        <div class="clearfix"></div><span class="count_bottom"></span>
+      </div>
+    </a>
+    <a href="/Credit">
+      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 tile_stats_count">
+        <span class="count_top"><i class="fa fa-usd"></i>  اعتبار حساب را مدیریت کن </span>
+        <div class="count">اعتبار حساب</div>
+        <div class="clearfix"></div><span class="count_bottom"></span>
+      </div>
+    </a>
+    <a href="/Messages">
+      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 tile_stats_count">
+        <span class="count_top"><i class="fa fa-envelope"></i>  پیام‌ها و اعلان‌ها را مشاهده کن </span>
+        <div class="count">پیام ها</div>
+        <div class="clearfix"></div><span class="count_bottom"></span>
+      </div>
+    </a>
+    <a href="/ContactUs">
+      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 tile_stats_count">
+        <span class="count_top"><i class="fa fa-tty"></i>  با ما در ارتباط باش </span>
+        <div class="count">ارتباط با ما</div>
+        <div class="clearfix"></div><span class="count_bottom"> </span>
+      </div>
+    </a>
+    <a href="/Settings">
+      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 tile_stats_count">
+        <span class="count_top"><i class="fa fa-user"></i>  حساب کاربری را مدیریت کن</span>
+        <div class="count">حساب کاربری</div>
+        <div class="clearfix"></div><span class="count_bottom"> </span>
+      </div>
+    </a>
+  </div>
+  <div class="row">
+
+  </div>
+</div>
+<% } %>
+

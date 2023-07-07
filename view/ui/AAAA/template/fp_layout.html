@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ورود به پنل کاربری | باداده</title>
+    <link rel="stylesheet" href="/StaticUI/css/bootstrap-rtl.css"/>
+    <script src="/StaticUI/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/StaticUI/Scripts/bootstrap-rtl.js"></script>
+    <style>
+        #info{
+            height: 100%;
+            background-image: linear-gradient(to right, #18356D , rgb(50,110,232));
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+        #title{
+            font-size: 60px;
+            font-weight: 800;
+            text-shadow: 3px 4px 0  rgb(50,110,232);
+            margin-bottom: 20px;
+            color: white;
+        }
+        #sub-title{
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+        }
+        .mycontainer{
+            margin-right: auto;
+            margin-left: auto;
+            max-width: 97.7%;
+        }  
+    </style>
+    <%@ style { %>
+    <% } %>
+</head>
+<body style="overflow: hidden;">
+    <div class="mycontainer">
+        <div class="row">
+            <%@ body { %>
+            <% } %>
+            <div id="info" class="col-lg-8 col-md-8 hidden-sm hidden-xs " >
+                <img src="/StaticUI/Images/pic_info.png"  class="img-responsive" alt="Responsive image">
+                <h2 id="title" class="text-center">
+                باداده</h2>
+                <h6 id="sub-title" class="text-center">  
+                سامانه برخط خوشه بندی داده‌های جریانی
+                </h6>
+            </div>
+            
+        </div>
+    </div>
+
+    <%@ script { %>
+    <% } %>
+</body>
+</html>

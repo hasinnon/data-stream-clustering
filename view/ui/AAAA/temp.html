@@ -1,0 +1,197 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ثبت نام</title>
+    <link rel="stylesheet" href="css/bootstrap-rtl.css"/>
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script src="Scripts/bootstrap-rtl.js"></script>
+</head>
+<style>
+    
+    #signup{
+        height: 100%;
+        background-color: #f5f7fa;
+        float: right;
+    }
+    #info{
+        height: 100%;
+        background-image: linear-gradient(to right, #18356D , rgb(50,110,232));
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .form-control{
+        border-radius: 8px;
+        font-size: 15px;
+    }
+    #singuptxt{
+        padding-top: 18px;
+    }
+    #signup-btn{
+        border-radius: 8px;
+        background-color: rgb(50,110,232);
+        color: white;  
+        font-weight: 600;
+        font-size: 15px;
+    }
+    #title{
+        font-size: 60px;
+        font-weight: 800;
+        text-shadow: 3px 4px 0  rgb(50,110,232);
+        margin-bottom: 20px;
+        color: white;
+    }
+    #sub-title{
+        font-size: 24px;
+        font-weight: 600;
+        color: white;
+    }
+    .mycontainer{
+        margin-right: auto;
+        margin-left: auto;
+        max-width: 97.7%;
+    }
+    #signup-lbl{
+        font-size: 40px;
+        font-weight: 700;
+        padding-bottom: 20px;
+        color: rgb(50,110,232);
+    }
+    #sidebar{
+        height: 100%;
+        width: 60px;
+        background-image: linear-gradient(to bottom, rgb(50,110,232) 70%, #18356D );
+        padding-left: 0px;
+        padding-right: 0px;
+        float: right;
+    }
+    .nav-cell{
+        float: left;
+        font-family: BYekan;
+        padding-right: 5px;
+    }
+</style>
+<body style="overflow-x: hidden;">
+    <div  class="row">
+        <div >
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                  <!-- Brand and toggle get grouped for better mobile display -->
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand">باداده</a>
+                    <a class="navbar-brand">/</a>
+                    <a class="navbar-brand">پیش خوان</a>
+                  </div>
+              
+                  <!-- Collect the nav links, forms, and other content for toggling -->
+                  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li class="dropdown" >
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="glyphicon glyphicon-bell"  title="اعلان ها" aria-hidden="true">
+                                <div class="hidden-lg hidden-md hidden-sm nav-cell">
+                                    اعلان ها
+                                </div>
+                            </i></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="#">مشاهده اعلان ها </a></li>
+                        </ul>
+                      </li>
+                        <li class="dropdown" >
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="glyphicon glyphicon-usd"  title="اعتبار حساب" aria-hidden="true">
+                                <div class="hidden-lg hidden-md hidden-sm nav-cell">
+                                  اعتبار حساب
+                                </div>
+                            </i></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="#">مشاهده اعتبار حساب</a></li>
+                          <li><a href="#">افزایش اعتبار حساب</a></li>
+                        </ul>
+                      </li>
+                       <li class="dropdown" >
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="glyphicon glyphicon-tasks"  title="سرویس ها" aria-hidden="true">
+                                <div class="hidden-lg hidden-md hidden-sm nav-cell">
+                                   سرویس ها
+                                </div>
+                            </i></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="#">مشاهده سرویس های ایجاد شده</a></li>
+                          <li><a href="#">ایجاد سرویس جدید</a></li>
+                        </ul>
+                      </li>
+                      <li class="dropdown" >
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="glyphicon glyphicon-user"  title="حساب کاربری" aria-hidden="true">
+                                <div class="hidden-lg hidden-md hidden-sm nav-cell">
+                                    حساب کاربری
+                                </div>
+                            </i></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="#">تنظیمات حساب کاربری</a></li>
+                          <li><a href="#">خروج</a></li>
+                        </ul>
+                      </li>
+                      <li class="active" title="پیش خوان"><a href="#"><i class="glyphicon glyphicon-home"  aria-hidden="true">
+                        <div class="hidden-lg hidden-md hidden-sm nav-cell">
+                        پیش خوان 
+                    </div> </i><span class="sr-only">(current)</span></a></li>
+                    </ul>
+                  </div>
+                </div><!-- /.container-fluid -->
+              </nav>
+        </div>
+        
+        
+        <div class="row">
+
+            <div id="signup" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="content-container">
+
+                
+                    <div class="col-lg-12 col-md-offset-0 col-md-12 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
+                        <form >
+                            <h1 id="signup-lbl"class="text-center">ثبت نام</h1>
+                            <div class="form-group">
+                            <input type="email" class="form-control" id="xxxxxxxxxxx" placeholder="نام و نام خانوادگی">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="xxxxxxxxxxx" placeholder="پست الکترونیکی">
+                            </div>
+                            <div class="form-group">
+                            <input type="password" class="form-control" id="xxxxxxxxx" placeholder="رمز عبور">
+                            </div>
+                            <button id="signup-btn" type="submit" class="btn btn-block">ثبت نام</button>
+                            <div id="singuptxt" class="form-subnote verfication-subnote text-center">
+                                <span class="form-subnote__label">
+                                    حساب کاربری دارید؟
+                                </span>
+                                <a class="form-subnote__link verfication-link" href="$$$$$$$$$$$$$$$">
+                                    <strong>وارد شوید</strong>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="info" class="col-lg-8 col-md-8 hidden-sm hidden-xs " >
+                <img src="Images/pic_info.png"  class="img-responsive" alt="Responsive image">
+                <h2 id="title" class="text-center">
+                باداده</h2>
+                <h6 id="sub-title" class="text-center">  
+                سامانه برخط خوشه بندی داده‌های جریانی
+                </h6>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

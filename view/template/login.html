@@ -1,0 +1,92 @@
+<%: func LoginHandler(w io.Writer) %>
+
+<%~ "fp_layout.html" %>
+<%@ title { %>
+    ورود به پنل کاربری
+<% } %> 
+
+<%@ style { %>
+    <style>
+    
+        #login{
+            height: 100%;
+            background-color: #f5f7fa;
+        }
+        .form-control{
+            font-size: 15px;
+        }
+        #singuptxt{
+            padding-top: 18px;
+    
+        }
+        #login-btn{
+            font-weight: 600;
+            font-size: 15px;
+        }
+        #vorod-lbl{
+            font-size: 40px;
+            font-weight: 700;
+            padding-bottom: 20px;
+            color:#2a3f54;
+        }
+        #divErr{
+            font-size: 15px;
+            color: red;
+            font-family: 'BYekan';
+            text-align: center;
+        }
+    </style>
+<% } %>
+
+<%@ body { %>
+    <div id="login" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 full-height">
+        <div class="content-container">
+
+        
+            <div class="col-lg-12 col-md-offset-0 col-md-12 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
+                <form id="login-form">
+                    <h1 id="vorod-lbl"class="text-center">ورود</h1>
+                    <div id="divErr">
+                    </div>
+                    <div class="form-group">
+                    <input type="email" class="form-control" name="username" placeholder="پست الکترونیکی">
+                    </div>
+                    <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="رمز عبور">
+                    </div>
+                    <button id="login-btn" name ="send" type="submit" class="btn btn-block btn-dark">ورود</button>
+                    <div id="singuptxt" class="form-subnote verfication-subnote text-center">
+                        <span class="form-subnote__label">
+                            حساب کاربری ندارید؟
+                        </span>
+                        <a class="form-subnote__link verfication-link" href="\Signup">
+                            <strong> ثبت نام کنید</strong>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<% } %>
+
+<%@ script { %>
+    <script>
+        $("#login-form").on("submit", function (e) {
+            e.preventDefault();
+            const myForm = document.getElementById("login-form");
+            const data = $("#login-form").serialize();
+            var $self = $(this);
+            $.ajax({
+                url: "/Login",
+                type: "POST",
+                data : data,
+            }).success( function(res){
+                if (res.errstate==true){
+                    document.getElementById("divErr").innerHTML = res.errmsg;
+                }else{
+                    window.location.replace(res.errmsg);
+                }
+            });
+        });
+    </script>
+<% } %>

@@ -1,0 +1,183 @@
+
+<%: func ServicesHandler(u datalayer.UserLogin, serv []datalayer.ServiceInfo, w io.Writer) %>
+
+
+<%~ "layout.html" %>
+
+<%@ title { %>
+  سرویس ها
+<% } %> 
+<%@ username { %>
+  <%= u.Fname+" "+u.Lname %>
+<% } %> 
+<%@ style { %>
+    <!-- iCheck -->
+    <link href="/StaticUI/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <style>
+    #linedr:before, #linedr:after { 
+      content: ""; 
+      flex: 1 1; 
+      border-bottom: 1px solid #e6e9ed; 
+      margin: 0px 7px;
+    } 
+    </style>
+<% } %>
+<%@ script { %>
+  <!-- bootstrap-progressbar -->
+  <script src="/StaticUI/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<% } %>
+
+
+<%@ body { %>
+  <div class="">
+      <div class="page-title">
+        <div class="title_right">
+          <h3>سرویس‌ ها</h3>
+        </div>
+
+        <div class="title_left">
+          <div class="form-group pull-left" style="display: inline;">
+            <div class="btn-group">
+              <a href="/NewService">
+              <button type="button" class="btn btn-default"> ایجاد سرویس جدید </button> 
+              </a>
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">#</span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/AddStructuredService">سرویس ساختاریافته</a>
+                </li>
+                <li><a href="/AddUnStructuredService">سرویس بدون ساختار</a>
+                </li>
+                <li class="divider"></li>
+                <li><a href="/NewService">ایجاد سرویس جدید</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="clearfix"></div>
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>سرویس‌ های ایجاد شده</h2>
+              <ul class="nav navbar-left panel_toolbox">    
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <!-- start services list -->
+              <% if len(serv)!=0 {%>
+                <div class="table-responsive">
+                  <table class="table table-striped projects">
+                    <thead>
+                      <tr>
+                        <th style="width: 1%">#</th>
+                        <th style="width: 15%">نام سرویس</th>
+                        <th>تاریخ&nbsp;ایجاد</th>
+                        <th style="text-align: center;">تاریخ&nbsp;انقضا</th>
+                        <th style="width: 15%; text-align: center;">وضعیت</th>
+                        <th style="text-align: center;">اعتبار&nbsp;سرویس</th>
+                        <th style="width: 25%; text-align: center;">ویرایش</th>
+                      </tr>
+                    </thead>                
+                    <tbody>
+                      <% num:=0 %>
+                      <% for _ , s := range serv { %>
+                        <% num++ %>
+                        <% if s.BServ.Type.Bool {%>
+                          <tr>
+                            <td><%= fmt.Sprint(num) %></td>
+                            <td>
+                              <a dir="ltr"><%= s.BServ.Name.String %></a>   
+                            </td>
+                            <td>
+                              <a dir="ltr"><%= ptime.ToPersian(s.BServ.Created.Time) %> </a>
+                              <br />
+                              <small><%= s.BServ.Created.Time.Format("15:04:05") %></small>
+                            </td>
+                            <td>
+                              <a dir="ltr"><%= ptime.ToPersian(s.SServ.ExpScheduled.Time) %> </a>
+                              <br />
+                              <small><%= s.SServ.ExpScheduled.Time.Format("15:04:05") %></small>
+                            </td>
+                            <td>
+                              <% if s.SServ.Status.Bool==true {%>
+                                <button type="button" class="btn btn-success btn-block btn-xs">فعال</button>
+                              <% }else { %>
+                                <button type="button" class="btn btn-danger btn-block btn-xs">غیرفعال</button>
+                              <% } %>
+                            </td>
+                            <td class="project_progress">
+                              <div style="text-align: center;"><a><i class="fa fa-ticket"></i> <%= fmt.Sprint(s.BServ.Credit.Int32) %> (ساعت)</a></div>
+                              <div class="progress progress_sm">
+                                <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="<%= fmt.Sprint(s.SServ.Used) %>"></div>
+                              </div>                              
+                              <small><%= fmt.Sprint(s.SServ.Used)+"%" %> استفاده شده</small>
+                            </td>   
+                            <td style="align-items: center; display: flex; justify-content: center;">
+                              <a href="/Service/<%= fmt.Sprint(s.BServ.Sid.Int32) %>/View" class="btn btn-primary btn-xs"><i class="fa fa-info"></i>  مشاهده  </a>
+                              <a href="/Service/<%= fmt.Sprint(s.BServ.Sid.Int32) %>/Management" class="btn btn-info btn-xs"><i class="fa fa-gears"></i>  مدیریت  </a>
+                            </td>
+                          </tr>
+                        <% }else { %>
+                          <tr>
+                            <td><%= fmt.Sprint(num) %></td>
+                            <td>
+                              <a dir="ltr"><%= s.BServ.Name.String %></a>                    
+                            </td>
+                            <td>
+                              <a dir="ltr"><%= ptime.ToPersian(s.BServ.Created.Time) %> </a>
+                              <br />
+                              <small><%= s.BServ.Created.Time.Format("15:04:05") %></small>
+                            </td>
+                            <td colspan="2"  >
+                              <div id="linedr" style="align-items: center; display: flex; justify-content: center;">
+                                <small>سرویس بدون ساختار</small>
+                              </div>                            
+                            </td>
+                            <td >
+                              <div style="align-items: center; display: flex; justify-content: center;">
+                              <% if s.BServ.Credit.Int32==-1 {%>
+                                <a><i class="fa fa-ticket"></i>  رایگان </a>
+                              <% }else { %>
+                                <a><i class="fa fa-ticket"></i> <%= fmt.Sprint(s.SServ.Credit.Int32) %> </a>
+                              <% } %>
+                              </div>
+                            </td>    
+              
+                            <td style="align-items: center; display: flex; justify-content: center;">
+                              <a href="/Service/<%= fmt.Sprint(s.BServ.Sid.Int32) %>/Result" class="btn btn-primary btn-xs"><i class="fa fa-info"></i>  مشاهده  </a>
+                            </td>
+                          </tr>
+                        <% } %>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+                <% }else { %>
+                  <div id="singuptxt" class="form-subnote verfication-subnote text-center">
+                    <span class="form-subnote__label">
+                        <h3>تا کنون سرویسی را ایجاد نکردید</h3>
+                        <br>
+                        <h2>برای ایجاد سرویس جدید <a href="/NewService"><strong>کلیک</strong></a> کنید</h2>
+                    </span>
+                </div> 
+              <% } %>
+              
+              <!-- end services list -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>  
+<% } %>
+

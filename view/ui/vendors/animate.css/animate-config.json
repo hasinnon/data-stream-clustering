@@ -1,0 +1,120 @@
+{
+
+  "attention_seekers": [
+    "bounce",
+    "flash",
+    "pulse",
+    "rubberBand",
+    "shake",
+    "headShake",
+    "swing",
+    "tada",
+    "wobble",
+    "jello"
+  ],
+
+  "bouncing_entrances": [
+    "bounceIn",
+    "bounceInDown",
+    "bounceInRight",
+    "bounceInLeft",
+    "bounceInUp"
+  ],
+
+  "bouncing_exits": [
+    "bounceOut",
+    "bounceOutDown",
+    "bounceOutRight",
+    "bounceOutLeft",
+    "bounceOutUp"
+  ],
+
+  "fading_entrances": [
+    "fadeIn",
+    "fadeInDown",
+    "fadeInDownBig",
+    "fadeInRight",
+    "fadeInRightBig",
+    "fadeInLeft",
+    "fadeInLeftBig",
+    "fadeInUp",
+    "fadeInUpBig"
+  ],
+
+  "fading_exits": [
+    "fadeOut",
+    "fadeOutDown",
+    "fadeOutDownBig",
+    "fadeOutRight",
+    "fadeOutRightBig",
+    "fadeOutLeft",
+    "fadeOutLeftBig",
+    "fadeOutUp",
+    "fadeOutUpBig"
+  ],
+
+  "flippers": [
+    "flip",
+    "flipInX",
+    "flipInY",
+    "flipOutX",
+    "flipOutY"
+  ],
+
+  "lightspeed": [
+    "lightSpeedIn",
+    "lightSpeedOut"
+  ],
+
+  "rotating_entrances": [
+    "rotateIn",
+    "rotateInDownRight",
+    "rotateInDownLeft",
+    "rotateInUpRight",
+    "rotateInUpLeft"
+  ],
+
+  "rotating_exits": [
+    "rotateOut",
+    "rotateOutDownRight",
+    "rotateOutDownLeft",
+    "rotateOutUpRight",
+    "rotateOutUpLeft"
+  ],
+
+  "specials": [
+    "hinge",
+    "rollIn",
+    "rollOut"
+  ],
+
+  "zooming_entrances": [
+    "zoomIn",
+    "zoomInDown",
+    "zoomInRight",
+    "zoomInLeft",
+    "zoomInUp"
+  ],
+
+  "zooming_exits": [
+    "zoomOut",
+    "zoomOutDown",
+    "zoomOutRight",
+    "zoomOutLeft",
+    "zoomOutUp"
+  ],
+
+  "sliding_entrances": [
+    "slideInDown",
+    "slideInRight",
+    "slideInLeft",
+    "slideInUp"
+  ],
+
+  "sliding_exits": [
+    "slideOutDown",
+    "slideOutRight",
+    "slideOutLeft",
+    "slideOutUp"
+  ]
+}

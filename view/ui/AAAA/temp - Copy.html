@@ -1,0 +1,162 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ثبت نام</title>
+    <link rel="stylesheet" href="css/bootstrap-rtl.css"/>
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script src="Scripts/bootstrap-rtl.js"></script>
+</head>
+<style>
+    #service-lbl{
+        font-size: 17px;
+        font-weight: 600;
+        border-radius: 40px;
+        border-width: 3;
+        padding: 5px 5px 5px 5px;
+        margin: 5px 5px 5px 5px;
+    }
+    #addservice-btn{
+      float: left;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 40px;
+      padding: 7px 7px 7px 7px;
+      position: relative;
+      box-sizing: border-box;
+      width: 200px;
+    }
+    .nav-cell{
+        font-family: BYekan;
+        padding-right: 5px;
+        float: left;
+    }
+    #service-div{
+      padding-top: 80px;
+      padding-left: 0px;
+      padding-right: 0px;
+      height: 100%;
+    }
+    #service-panel{
+      padding-left: 0px;
+      padding-right: 0px;
+      height: 90%
+    }
+    body{
+      background-color:  #f5f7fa;
+    }
+    .navbar-left{
+      font-size: 22px;
+    }
+    .navbar-brand{
+      color: #ffffff !important;
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                  <!-- Brand and toggle get grouped for better mobile display -->
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand">باداده</a>
+                    <a class="navbar-brand">/</a>
+                    <a class="navbar-brand">پیش خوان</a>
+                  </div>
+              
+                  <!-- Collect the nav links, forms, and other content for toggling -->
+                  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li class="dropdown" >
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="glyphicon glyphicon-bell"  title="اعلان ها" aria-hidden="true">
+                                <div class="hidden-lg hidden-md hidden-sm nav-cell">
+                                    اعلان ها
+                                </div>
+                            </i></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="#">مشاهده اعلان ها </a></li>
+                        </ul>
+                      </li>
+                        <li class="dropdown" >
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="glyphicon glyphicon-usd"  title="اعتبار حساب" aria-hidden="true">
+                                <div class="hidden-lg hidden-md hidden-sm nav-cell">
+                                  اعتبار حساب
+                                </div>
+                            </i></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="#">مشاهده اعتبار حساب</a></li>
+                          <li><a href="#">افزایش اعتبار حساب</a></li>
+                        </ul>
+                      </li>
+                       <li class="dropdown" >
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="glyphicon glyphicon-tasks"  title="سرویس ها" aria-hidden="true">
+                                <div class="hidden-lg hidden-md hidden-sm nav-cell">
+                                   سرویس ها
+                                </div>
+                            </i></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="#">مشاهده سرویس های ایجاد شده</a></li>
+                          <li><a href="#">ایجاد سرویس جدید</a></li>
+                        </ul>
+                      </li>
+                      <li class="dropdown" >
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="glyphicon glyphicon-user"  title="حساب کاربری" aria-hidden="true">
+                                <div class="hidden-lg hidden-md hidden-sm nav-cell">
+                                    حساب کاربری
+                                </div>
+                            </i></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="#">تنظیمات حساب کاربری</a></li>
+                          <li><a href="#">خروج</a></li>
+                        </ul>
+                      </li>
+                      <li class="active" title="پیش خوان"><a href="#"><i class="glyphicon glyphicon-home"  aria-hidden="true">
+                        <div class="hidden-lg hidden-md hidden-sm nav-cell">
+                        پیش خوان 
+                    </div> </i><span class="sr-only">(current)</span></a></li>
+                    </ul>
+                  </div>
+                </div><!-- /.container-fluid -->
+              </nav>
+        </div> 
+    
+    <div id="service-div">
+
+        <div id="service-panel" class="panel panel-info col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
+            <div class="panel-heading"><div > <button id="addservice-btn" class="btn-primary ">+ ایجاد سرویس جدید</button></div><h3 id="service-lbl" class="panel-title">سرویس&nbsp;های&nbsp;ایجاد&nbsp;شده</h3> </div>
+           
+        <div class="panel-body">
+          <table class="table table-hover">
+            <tr>
+              <th>#</th>
+              <th>نام سرویس</th>
+              <th>تاریخ ایجاد</th>
+              <th>تاریخ انقضا</th>
+              <th>تعداد داده های بررسی شده</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>service1</td>
+              <td>1399</td>
+            </tr>
+          </table>
+        </div>
+        </div>
+        
+        
+        
+    </div>
+  </div> 
+</body>
+</html>

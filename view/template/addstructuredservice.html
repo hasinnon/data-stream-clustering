@@ -1,0 +1,345 @@
+
+<%: func AddStructuredServiceHandler(u datalayer.UserLogin,  w io.Writer) %>
+
+
+<%~ "layout.html" %>
+
+<%@ title { %>
+  سرویس ها
+<% } %> 
+<%@ username { %>
+  <%= u.Fname+" "+u.Lname %>
+<% } %> 
+<%@ style { %>
+  <!-- iCheck -->
+  <link href="/StaticUI/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+  <!-- Switchery -->
+  <link href="/StaticUI/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+<% } %>
+<%@ script { %>
+  <!-- iCheck -->
+  <script src="/StaticUI/vendors/iCheck/icheck.min.js"></script>
+  <!-- Switchery -->
+  <script src="/StaticUI/vendors/switchery/dist/switchery.min.js"></script>
+  <!-- validator -->
+  <script src="/StaticUI/vendors/validator/validator.js"></script>
+  <!-- jquery.inputmask -->
+  <script src="/StaticUI/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+  <!-- jQuery Smart Wizard -->
+  <script src="/StaticUI/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
+  
+  
+<% } %>
+<%@ myscript { %>
+<script> 
+  var count = 2; 
+  function addOption() { 
+        var theForm = document.getElementById("step2Form"); 
+        var newOption = document.createElement("div");
+        newOption.innerHTML= `<div id="grp_`+count+`">
+                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="in_`+count+`"><a onclick="chdelete(this);return false;"><i style="color: crimson;" class="fa fa-close"></i></a> نام داده 
+                          </label>
+                          <div class="item form-group">
+                            <div class="col-md-5 col-sm-5 col-xs-12">
+                              <input id="in_`+count+`" type="text" name="data_`+count+`" required="required"  data-validate-length-range="1,20" class="form-control col-md-7 col-xs-12">
+                            </div>
+                          </div>
+                        </div>`                         
+        theForm.appendChild(newOption);
+        document.getElementById("count").value=count
+        count++;
+    }
+
+function chdelete(e){
+    e.parentNode.parentNode.remove();
+    // style.display='none';
+  } 
+
+function sendform() {
+
+  var c = true;
+
+  if (c){
+    const myForm = document.getElementById("servform");
+    const data = $("#servform").serialize();
+    var $self = $(this)
+    $.ajax({
+        url: window.location.pathname,
+        type: "POST",
+        data : data,
+    }).success( function(res) {
+      if (res.errstatus==true){        
+          // document.getElementById("Err").innerHTML = res.errmsg;
+          // document.getElementById("divErr").style.display="block";
+          alert(res.errmsg);
+      }else{
+          window.location.replace(res.errmsg);
+      }
+    });
+  }
+}
+
+var form = document.getElementById("servform");
+
+document.getElementById("fbtn").addEventListener("click", function () {
+  var r = validator.checkAll($("#servform"));
+  if (r){
+    sendform();
+  }
+  
+});
+
+function checkhandle()
+{
+  var checkbox = document.getElementById('checkactive');
+  if (checkbox.checked != true)
+  {
+    document.getElementById('checkmsg').innerHTML="فعال نشود";
+  }else{
+    document.getElementById('checkmsg').innerHTML="فعال شود";
+  }
+}
+</script>
+<% } %>
+
+<%@ body { %>
+    <div class="">
+        <div class="page-title">
+            <div class="title_right">
+              <h3>ایجاد سرویس جدید</h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>ایجاد سرویس‌ ساختار یافته</h2>
+                    <ul class="nav navbar-left panel_toolbox">    
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+              <div class="x_content">
+
+                <h2>مرحله های زیر را به دقت طی کنید</h2><br><br>
+                <!-- Tabs -->
+                <form id="servform" class="form-horizontal form-label-right" novalidate>
+
+                  <!-- step 1  -->
+                  <div class="form-group">
+                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">مرحله اول:
+                      <br>
+                      <small class="text-navy">تعیین مشخصات سرویس</small>
+                    </label>
+                    
+                    
+                      <br>
+                      
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="row">
+                          <p>برای سرویس که قصد ایجاد آن را دارید، یک نام مناسب انتخاب کنید</p>
+                        </div>
+                        <br>
+                        <div class="item form-group">
+                          <label class="control-label col-md-3 col-sm-3" for="first-name">نام سرویس<span class="required">*</span>
+                          </label>
+                          <div class="col-md-5 col-sm-5 col-xs-12">
+                            <input type="text" name="sname" id="service-name" required="required" class="form-control col-md-4 col-xs-12">
+                          </div>
+                        </div>
+                        <br>
+                      </div>
+                      <br>
+                    
+                  </div>
+                  <div class="ln_solid"></div>
+                  <!-- step 2  -->
+                  <div class="form-group">
+                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">مرحله دوم:
+                      <br>
+                      <small class="text-navy"> تعیین ساختار داده سرویس</small>
+                    </label>
+                    
+                    
+                    
+                      <br>
+                      <div id="step2Form" class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="row">
+                          <p>در این قسمت نام داده‌هایی که در هر درخواست به سامانه ارسال می‌شود را اتخاب کنید</p>
+                          <p>
+                            شما می‌توانید داده‌ها را کم و زیاد کنید.
+                          </p>
+                        </div>
+                        <br> 
+                        <div class="row">
+                        <a href="#" onclick="addOption();return false";>
+                          <button id="btn" type="button" class="btn btn-info">افزودن به داده‌ها</button>
+                        </a>
+                        </div>
+                        <br> 
+
+                        <div id="grp_0">
+                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="in_0"><a onclick="chdelete(this);return false;"><i style="color: crimson;" class="fa fa-close"></i></a> نام داده 
+                          </label>
+                          <div class="item form-group">
+                            <div class="col-md-5 col-sm-5 col-xs-12">
+                              <input id="in_0" type="text" name="data_0" data-validate-length-range="1,20"  required="required" class="form-control col-md-4 col-xs-12">
+                            </div>
+                          </div>
+                        </div>
+                        
+                        
+                      </div>
+                      <br>
+                    
+                  </div>
+                  <input type="hidden" id="count" name="count" value="1">
+                  <div class="item ln_solid"></div>
+                  <!-- step 13  -->
+                  <div class="form-group">
+                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">مرحله سوم:
+                      <br>
+                      <small class="text-navy">تعیین پارامترهای الگوریتم خوشه‌بندی</small>
+                    </label>
+                    
+                    
+                      <br>
+                      
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="row">
+                          <p>برای انجام عملیات خوشه بندی لازم است پارامترهای زیر را مشخص کنید</p>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="row">
+                          <p><strong>epsilon میکرو خوشه‌ها: </strong>داده های شما قبل از خوشه بندی در میکروخوشه‌هایی دسته بندی می‌شوند. در این قسمت می‌توانید مقدار شعاع epsilon این میکرو خوشه ها را تعیین کنید.</p>
+                        </div>
+                        <div class="item form-group">
+                          <label class="control-label col-md-3 col-sm-3" for="meps">epsilon میکروخوشه‌ها
+                          </label>
+                          <div class="col-md-5 col-sm-5 col-xs-12">
+                            <input type="number" step="0.1" data-validate-minmax="0,999999999999999" name="meps" id="meps" required="required" class=" form-control col-md-4 col-xs-12">
+                          </div>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="row">
+                          <p><strong>epsilon الگوریتم DBscan: </strong>داده های شما بعد از دسته بندی توسط الگوریتم DBscan می‌شوند. در این قسمت می‌توانید مقدار شعاع خوشه‌بندی epsilon الگوریتم DBscan را تعیین کنید.</p>
+                        </div>
+                        <div class="item form-group">
+                          <label class="control-label col-md-3 col-sm-3" for="dbeps">epsilon الگوریتم DBscan
+                          </label>
+                          <div class="col-md-5 col-sm-5 col-xs-12">
+                            <input  type="number" step="0.1" data-validate-minmax="0,999999999999999" name="dbeps" id="dbeps" required="required" class=" form-control col-md-4 col-xs-12">
+                          </div>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="row">
+                          <p><strong>ضریب اهمیت داده قدیمی: </strong>این پارامتر اهمیت داده قدیمی را مشخص می‌کند هر چه قدر این مقدار بیشتر باشد اهمیت داده‌های قدیمی کتر است. این پارامتر باید بزرکتر از صفر باشد.</p>
+                        </div>
+                        <div class="item form-group">
+                          <label class="control-label col-md-3 col-sm-3" for="lmbda">ضریب اهمیت داده قدیمی<span class="required">*</span>
+                          </label>
+                          <div class="col-md-5 col-sm-5 col-xs-12">
+                            <input  type="number" step="0.1" data-validate-minmax="0,999999999999999"  name="lmbda" id="lmbda" required="required" class="form-control col-md-4 col-xs-12">
+                          </div>
+                        </div>
+                        <br>
+                      </div>
+                      <br>
+                    
+                  </div>
+                  <div class="ln_solid"></div>
+                  <!-- step 4  -->
+                  <div class="item form-group">
+                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">مرحله چهارم:
+                      <br>
+                      <small class="text-navy"> تعیین میزان اعتبار سرویس</small>
+                    </label>
+                    
+                    
+                    
+                      <br>
+                      <div id="step2Form" class="col-md-9 col-sm-9 col-xs-12">
+                        
+                        <div  class="item form-group">
+                          <h2>مژده! </h2>
+                          <p>این سرویس به مدت 90 روز به صورت رایگان برای شما فعال خواهدشد و نیازی به خرید اعتبار ندارید.</p>
+                          
+                        </div>
+                         
+                        <br>
+                      </div>
+                      <br>
+                    
+                  </div>
+                  <div class="ln_solid"></div>
+                  <!-- step 5  -->
+                  <div class="item form-group">
+                    <label class="col-md-3 col-sm-3 col-xs-12 control-label">مرحله پنچم:
+                      <br>
+                      <small class="text-navy"> فعال سازی سرویس</small>
+                    </label>
+                    
+                    
+                    
+                      <br>
+                      <div id="step2Form" class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="row">
+                          <p>به صورت پیش فرض این سرویس غیرفعال است. می‌توانید از هم اکنون سرویس را فعال کنید.
+                            در غیر این صورت سرویس شما غیرفعال خواهدبود تا زمانی که از پنل مدیریت این سرویس اقدام به فعال‌سازی سرویس نمایید.
+                          </p>
+                        </div>
+
+                        
+                        <label style=" display: inline">
+                          <input type="checkbox" id="checkactive" name="active" onclick="checkhandle()" class="js-switch" /> <div id="checkmsg">فعال نشود </div>
+                        </label>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="row">
+                          <p>در این قسمت می‌توانید برای این سرویس به صورت دستی تاریخی برای منقضی شدن سرویس انتخاب کنید. 
+                            بعد از این تاریخ داده‌های ارسالی بررسی نخواهندشد. 
+                          </p>
+                        </div> 
+
+                        <div id="grp_exptime" class="item form-group">
+                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="exptime"> تاریخ انقضا سرویس
+                          </label>
+                          <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input id="exptime" dir="ltr" name="exptime" type="text" pattern="\d{4}/\d{2}/\d{2}" data-inputmask="'mask': '9999/99/99'" name="exptime"  class="optional form-control col-md-7 col-xs-12">
+                          </div>
+                        </div>
+
+                        <br>
+                        <br>
+                        <br>
+                                                
+                      </div>
+                      <br>
+                    
+                  </div>
+                  <div class="ln_solid"></div>
+
+
+                  <div class="form-group">
+                    <button id="fbtn" type="button" class="btn btn-success">ایجاد سرویس</button>
+                  </div>
+
+                </form>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<% } %>
+

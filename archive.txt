@@ -1,0 +1,367 @@
+hero -source="D:/project/GO/gowork/src/datastream/view/template" -dest="D:/project/GO/gowork/src/datastream/view/gotemplate" -extensions=".html,.htm" -pkgname="gotemplate" -watch
+
+-----------------------------------------------------------
+$("#login-form").on("submit", function (e) {
+            e.preventDefault();
+
+            var data ={
+                username :  $('[name="username"]').val(),
+                password : $('[name="password"]').val(),
+            }
+            const json = JSON.stringify(data);
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("divErr").innerHTML =
+                    xhr.responseText;
+                }
+            };
+            xhr.open('POST' , '/Login');
+            xhr.setRequestHeader('Content-Type' , 'application/json');
+            xhr.send(json);
+        });
+
+---------------------------------------------------------------
+payload := struct {
+		username string `json:"username"`
+		password string `json:"password"`
+	}{}
+	var vv interface{}
+	err := json.NewDecoder(r.Body).Decode(&vv)
+	fmt.Println("j1-->", payload)
+	//_ = json.NewDecoder(r.Body).Decode(&vv)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	message := fmt.Sprintf(
+		"hello, my name is %s. ....old %s",
+		payload.username,
+		payload.password,
+	)
+	w.Write([]byte(message))
+
+-------------------------------------------------------------
+$("#login-form").on("submit", function (e) {
+            e.preventDefault();
+            const xhr = new XMLHttpRequest();
+            const myForm = document.getElementById("login-form");
+            const data = $("#login-form").serialize();
+
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("divErr").innerHTML =
+                    xhr.responseText;
+                }
+            };
+            console.log(data);
+            xhr.open('POST' , '/Login');
+            xhr.send();
+        });
+
+
+----------------------------------------------------------------------
+$("#login-form").on("submit", function (e) {
+            e.preventDefault();
+            const xhr = new XMLHttpRequest();
+            const myForm = document.getElementById("login-form");
+            const data = $("#login-form").serialize();
+            var $self = $(this);
+
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("divErr").innerHTML =
+                    xhr.responseText;
+                }
+            };
+            console.log(data);
+            xhr.open('POST' , '/Login');
+            
+            $.ajax({
+                url: $self.attr("action"),
+                type: $self.attr("method"),
+                data : data,
+            }).then(function (res) {
+                $(".message").text(res);
+            });
+        });
+
+------------------------------------------------------javab dade
+$("#login-form").on("submit", function (e) {
+            e.preventDefault();
+            const myForm = document.getElementById("login-form");
+            const data = $("#login-form").serialize();
+            var $self = $(this);
+            $.ajax({
+                url: "/Login",
+                type: "POST",
+                data : data,
+            }).success( function(result){
+                $("#divErr").html(result);
+            });
+        });
+
+-------------------------------------------------------
+// ??????????????
+func (p Point) Pow2() *Point {
+	rp := make(Point)
+	rp.Assign(p)
+	for k, v := range p {
+		switch rp[k].(type) {
+		case float32:
+			rp[k] = v.(float32) * v.(float32)
+		case float64:
+			rp[k] = v.(float32) * v.(float32)
+		case int:
+			rp[k] = v.(int) * v.(int)
+		case int32:
+			rp[k] = v.(int32) * v.(int32)
+		case int64:
+			rp[k] = v.(int64) * v.(int64)
+
+		}
+
+	}
+	return &rp
+}
+
+// ??????????????
+func (p Point) Add(newP Point) *Point {
+	rp := make(Point)
+	rp.Assign(p)
+	for k, v := range p {
+		switch rp[k].(type) {
+		case float32:
+			rp[k] = v.(float32) + newP[k].(float32)
+		case float64:
+			rp[k] = v.(float32) + newP[k].(float32)
+		case int:
+			rp[k] = v.(int) + newP[k].(int)
+		case int32:
+			rp[k] = v.(int32) + newP[k].(int32)
+		case int64:
+			rp[k] = v.(int64) + newP[k].(int64)
+
+		}
+	}
+	return &rp
+}
+
+// ??????
+func (p Point) Sub(newP Point) *Point {
+	rp := make(Point)
+	rp.Assign(p)
+	for k, v := range p {
+		switch rp[k].(type) {
+		case float32:
+			rp[k] = v.(float32) - newP[k].(float32)
+		case float64:
+			rp[k] = v.(float64) - newP[k].(float64)
+		case int:
+			rp[k] = v.(int) - newP[k].(int)
+		case int32:
+			rp[k] = v.(int32) - newP[k].(int32)
+		case int64:
+			rp[k] = v.(int64) - newP[k].(int64)
+
+		}
+	}
+	return &rp
+}
+
+// ??????????????
+func (p Point) Mult(newP Point) *Point {
+	rp := make(Point)
+	rp.Assign(p)
+	for k, v := range p {
+		switch rp[k].(type) {
+		case float32:
+			rp[k] = v.(float32) * newP[k].(float32)
+		case float64:
+			rp[k] = v.(float32) * newP[k].(float32)
+		case int:
+			rp[k] = v.(int) * newP[k].(int)
+		case int32:
+			rp[k] = v.(int32) * newP[k].(int32)
+		case int64:
+			rp[k] = v.(int64) * newP[k].(int64)
+
+		}
+	}
+	return &rp
+}
+
+---------------------------------------------------------------------
+func (mCluster *MicroCluster) insert(point DenPoint, timstamp int32) {
+	mCluster.N++
+	mCluster.LastEditT = timstamp
+
+	// weight = N + 1;
+	// mCluster.LS = *mCluster.LS.Add(point.Value)
+	// mCluster.SS = *mCluster.SS.Add(*point.Value.Pow2())
+
+	oldWeight := mCluster.weight
+	//mCluster.weight++
+	mCluster.weight = mCluster.weight*math.Pow(2, -1*mCluster.Lambda) + float64(timstamp)
+	oldLS := mCluster.LS
+	mCluster.LS = *mCluster.LS.Add(*point.Value.Sub(mCluster.LS).Mult(float64(timstamp) / mCluster.weight))
+	mCluster.SS = *mCluster.SS.Mult(((mCluster.weight - float64(timstamp)) / oldWeight)).Add(*(point.Value.Sub(mCluster.LS)).MultP(*(point.Value.Sub(oldLS))).Mult(mCluster.weight))
+}
+----------------------------------------------------
+func (denSRM *DenStream) nearestCluster(point DenPoint, cl []MicroCluster) MicroCluster {
+	var min MicroCluster
+	var check bool = true
+	var minDist float64 = 0
+	for c := 0; c < len(cl); c++ {
+		var cluster MicroCluster = cl[c]
+		if check {
+			min = cluster
+			check = false
+		}
+		//????? in a line
+		var dist float64
+		// var center DenPoint
+		// center.Assign(*cluster.GetCenter())
+		center := *cluster.GetCenter()
+		dist = Distance(point, center)
+		dist -= cluster.GetRadius(denSRM.Timestamp)
+
+		if c == 0 {
+			minDist = dist
+		} else {
+			if dist < minDist {
+				minDist = dist
+				min = cluster
+
+			}
+		}
+	}
+
+	return min
+}
+
+-----------------------------------------
+<table>
+                                <tr>
+                                  <td>
+                                    <input type="checkbox" class="flat" name="check_<%= fmt.Sprint(i) %>" checked="checked">
+                                    <br> <small>بررسی&nbsp;شود</small>
+                                  </td>
+                                  <td style="padding-right: 10px;">
+                                    <input type="number" id="number" name="weight_<%= fmt.Sprint(i) %>" placeholder="وزن داده = 1" data-validate-minmax="0,999999999999999" class="form-control">
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2">
+                                    <select name="datatype_<%= fmt.Sprint(i) %>" class="select2_group form-control" required>
+                                      <option value="">انتخاب نوع داده</option>
+                                      <optgroup label="داده عددی">
+                                        <option value="AK">عدد صحیح</option>
+                                        <option value="HI">عدد اعشاری</option>
+                                      </optgroup>
+                                      <optgroup label="داده رشته‌ای">
+                                        <option value="CA">تک رشته</option>
+                                        <option value="NV">چند رشته با جدا کننده '.'</option>
+                                        <option value="OR">چند رشته با جدا کننده '-'</option>
+                                        <option value="WA">چند رشته با جدا کننده '/'</option>
+                                      </optgroup>                              
+                                    </select>
+                                  </td>
+                                </tr>
+                              </table>
+
+------------------------------------------------------------------------
+
+<!-- <div id="wizard_verticle" class="form_wizard wizard_verticle">
+<ul class="list-unstyled wizard_steps">
+	<li>
+	<a href="#step-1">
+		<span class="step_no">1</span>
+	</a>
+	</li>
+	<li>
+	<a href="#step-2">
+		<span class="step_no">2</span>
+	</a>
+	</li>
+	<li>
+	<a href="#step-3">
+		<span class="step_no">3</span>
+	</a>
+	</li>
+	<li>
+	<a href="#step-4">
+		<span class="step_no">4</span>
+	</a>
+	</li>
+</ul>
+
+<div id="step-1">
+	<h2 class="StepTitle">مرحله اول: تعیین مشخصات سرویس</h2>
+	
+
+	<p>برای سرویس که قصد ایجاد آن را دارید، یک نام مناسب انتخاب کنید</p>
+	<br>
+	<div class="form-group">
+	<label class="control-label col-md-3 col-sm-3" for="first-name">نام سرویس<span class="required">*</span>
+	</label>
+	<div class="col-md-6 col-sm-6">
+		<input type="text" name="sname" id="service-name" required="required" class="form-control col-md-7 col-xs-12">
+	</div>
+	<br>
+	</div>
+	<br>
+	
+</div>
+<div id="step-2">
+	<h2 class="StepTitle">مرحله دوم: تعیین ساختار داده سرویس</h2>
+	<p>در این قسمت نام داده‌هایی که در هر درخواست به سامانه ارسال می‌شود را اتخاب کنید</p>
+	<p>
+	شما می‌توانید داده‌ها را کم و زیاد کنید.
+	</p>
+	<br>
+	<div id="step222Form">
+	<a href="#" onclick="addOption();return false";>
+	<button id="btn" type="button" class="btn btn-info">افزودن به داده‌ها</button>
+	</a>                        
+	<div id="grp_0" class="item form-group">
+		<label class="control-label col-md-3 col-sm-3 col-xs-12" for="in_0"><a onclick="chdelete(this);return false;"><i style="color: crimson;" class="fa fa-close"></i></a> نام داده 
+		</label>
+		<div class="col-md-6 col-sm-6 col-xs-12">
+		<input id="in_0" type="text" required="required" name="data_0" data-validate-length-range="1,20" class="optional form-control col-md-7 col-xs-12">
+		</div>
+	</div>
+	
+	</div>
+	<br><br><br><br><br><br>
+</div>
+<div id="step-3">
+	<h2 class="StepTitle">مرحله سوم: تعیین میزان اعتبار سرویس</h2>
+	<h2>این سرویس به مدت 90 روز به صورت رایگان برای شما فعال شده است</h2>
+	<br><br><br><br><br><br><br>
+</div>
+<div id="step-4">
+	<h2 class="StepTitle">مرحله چهارم: تعیین ساختار داده</h2>
+	<p>به صورت پیش فرض این سرویس غیرفعال است. می‌توانید از هم اکنون سرویس را فعال کنید.
+	در غیر این صورت سرویس شما غیرفعال خواهدبود تا زمانی که از پنل مدیریت این سرویس اقدام به فعال‌سازی سرویس نمایید.
+	</p>
+	<div class="">
+	<label>
+		<input type="checkbox" name="active" class="js-switch" /> فعال نشود
+	</label>
+	</div>
+	<br><br>
+	<p>در این قسمت می‌توانید برای این سرویس به صورت دستی تاریخی برای منقضی شدن سرویس انتخاب کنید. 
+	بعد از این تاریخ داده‌های ارسالی بررسی نخواهندشد. 
+	</p>
+	<div id="grp_0" class="item form-group">
+	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="in_0"> تاریخ انقضا سرویس
+	</label>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+		<input id="in_0" dir="ltr" name="exptime" type="text" data-inputmask="'mask': '9999/99/99'" name="data_0" data-validate-length-range="10,10" class="optional form-control col-md-7 col-xs-12">
+	</div>
+	</div>
+</div>
+</div> -->
+<!-- End SmartWizard Content -->

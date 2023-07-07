@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/StaticUI/Images/icon.ico" type="image/ico" />
+
+    <title>بـاداده | 
+      <%@ title { %>
+      <% } %>
+    </title>
+
+    <!-- Bootstrap -->
+    <link href="/StaticUI/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/StaticUI/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/StaticUI/vendors/nprogress/nprogress.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="/StaticUI/build/css/custom.min.css" rel="stylesheet">
+    <style>
+        .full-height{
+            height: 100vh;
+        }
+        body{
+            height: 100vh;
+        }
+        #info{
+            height: 100%;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+        #title{
+            font-size: 60px;
+            font-weight: 800;
+            text-shadow: 3px 4px 0  rgb(50,110,232);
+            margin-bottom: 20px;
+            color: white;
+        }
+        #sub-title{
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+        }
+        .mycontainer11{
+            margin-right: auto;
+            margin-left: auto;
+            max-width: 97.7%;
+            height: 100%;
+        }  
+    </style>
+    <%@ style { %>
+    <% } %>
+</head>
+<body style="overflow: hidden;">
+    <div class="mycontainer11">
+        <div class="row full-height">
+            <%@ body { %>
+            <% } %>
+            <div id="info" class="col-lg-8 col-md-8 hidden-sm hidden-xs" >
+                <img src="/StaticUI/Images/info.png"  class="img-responsive" alt="Responsive image">
+                <h2 id="title" class="text-center">
+                باداده</h2>
+                <h6 id="sub-title" class="text-center">  
+                سامانه برخط خوشه بندی داده‌های جریانی
+                </h6>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/StaticUI/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/StaticUI/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="/StaticUI/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/StaticUI/vendors/nprogress/nprogress.js"></script>
+    <%@ script { %>
+    <% } %>
+
+    <!-- Custom Theme Scripts -->
+    <script src="/StaticUI/build/js/custom.min.js"></script>
+</body>
+</html>

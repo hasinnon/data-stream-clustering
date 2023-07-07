@@ -1,0 +1,477 @@
+<%: func ManagementServiceHandler(u datalayer.UserLogin,serv datalayer.ServiceInfo,vars denstream.PointVars, sid string, w io.Writer) %>
+
+
+<%~ "layout.html" %>
+
+<%@ title { %>
+    نتیجه عملیات خوشه بندی
+<% } %> 
+<%@ username { %>
+  <%= u.Fname+" "+u.Lname %>
+<% } %> 
+<%@ style { %>
+    <!-- iCheck -->
+    <link href="/StaticUI/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- Switchery -->
+  <link href="/StaticUI/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+<% } %>
+<%@ script { %>
+  <!-- iCheck -->
+  <script src="/StaticUI/vendors/iCheck/icheck.min.js"></script>
+  <!-- bootstrap-progressbar -->
+  <script src="/StaticUI/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+  <!-- Switchery -->
+  <script src="/StaticUI/vendors/switchery/dist/switchery.min.js"></script>
+<% } %>
+<%@ myscript { %>
+<script>
+  function checkhandle()
+  {
+    var checkbox = document.getElementById('checkactive');
+    if (checkbox.checked != true)
+    {
+      document.getElementById('checkmsg').innerHTML="غیرفعال شود";
+    }else{
+      document.getElementById('checkmsg').innerHTML="فعال شود";
+    }
+  }
+  function changename(){
+    document.getElementById('s-name').readOnly=false;
+    document.getElementById('snamelbl').innerHTML='نام سرویس <a data-toggle="modal" data-target=".modal-name"><i class="fa fa-check text-success"></i></a>';
+  }
+  function sendname(){
+    document.getElementById('s-name').readOnly=true;
+    document.getElementById('snamelbl').innerHTML='نام سرویس <a onclick="changename()"><i class="fa fa-pencil-square-o text-info"></i></a>';
+  }
+  function changeexp(){
+    document.getElementById('s-name').readOnly=false;
+    document.getElementById('sexplbl').innerHTML='تاریخ انقضای کلید <a data-toggle="modal" data-target=".change-exp-modal"><i class="fa fa-check text-success"></i></a>';
+  }
+  function sendexp(){
+    document.getElementById('s-name').readOnly=true;
+    document.getElementById('sexplbl').innerHTML='تاریخ انقضای کلید <a onclick="changename()"><i class="fa fa-pencil-square-o text-info"></i></a>';
+  }
+</script>
+<% } %>
+
+<%@ body { %>
+  <div class="">
+      
+      <div class="page-title">
+          <div class="title_right">
+            <h3>مدیریت سرویس</h3>
+          </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+                <h2>راهنما</h2>
+                <ul class="nav navbar-left panel_toolbox">    
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content" style="display: none;">
+              <p>راهنمای عناوین و بخش‌های مختلف صفحه تنظیمات سرویس</p>
+              <br>
+              <div class="accordion" id="accordion1" role="tablist" aria-multiselectable="true">
+                <div class="panel">
+                  <a class="panel-heading collapsed" role="tab" id="headingTwo1" data-toggle="collapse" data-parent="#accordion1" href="#collapse1" aria-expanded="false" aria-controls="collapse1">
+                    <h4 class="panel-title">نام سرویس</h4>
+                  </a>
+                  <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                      <p>در صفحه سرویس‌ها، این سرویس با این نام دیده می‌شود. <br>
+                        برای متمایز شدن این سرویس با دیگر سرویس‌های ایجاد شده بهتر است از نام‌های با مسمی استفاده شود                 
+
+                      </p>
+                      
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <a class="panel-heading collapsed" role="tab" id="headingTwo1" data-toggle="collapse" data-parent="#accordion1" href="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                    <h4 class="panel-title">وضعیت سرویس</h4>
+                  </a>
+                  <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                      <p>این بخش نشان‌دهنده فعال بودن یا غیر فعال بودن سرویس شما است. به راحتی می‌توانید وضعیت سرویس را تغییر دهید. <br>
+                        بعد از غیر فعال شدن سرویس داده‌های ارسالی به سرور بررسی نخواهند شد. همچنین هنگام غیرفعال بودن سرویس اعتبار سرویس مصرف نخواهد شد.
+                      </p>
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <a class="panel-heading collapsed" role="tab" id="headingTwo1" data-toggle="collapse" data-parent="#accordion1" href="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                    <h4 class="panel-title">تاریخ ایجاد سرویس</h4>
+                  </a>
+                  <div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                      <p>این بخش نشان‌دهنده زمان ایجاد سرویس است
+
+                      </p>
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <a class="panel-heading collapsed" role="tab" id="headingTwo1" data-toggle="collapse" data-parent="#accordion1" href="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                    <h4 class="panel-title">تاریخ انقضای کلید</h4>
+                  </a>
+                  <div id="collapse4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                      <p>شما می‌توانید برای کلید خود تاریخ انقضا تعیین کنید. <br>
+                        درخواست‌هایی که دارای این کلید هستند و بعد از زمان انقضا ارسال می‌شوند بررسی نخواهندشد. <br>
+                        با تغییر تاریخ انقضای کلید، کلید جدید ایجاد خواهد شد. هنگام تغییر تاریخ انقضای کلید می‌توانید مشخص کنید کلید قبلی معتبر باقی بماند و یا نامعتبر در نظر گرفته شود. <br>
+                        تاریخ انقضای کلید همواره برابر و یا قبل از تاریخ اعتبار سرویس است.
+
+                      </p>
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <a class="panel-heading collapsed" role="tab" id="headingTwo1" data-toggle="collapse" data-parent="#accordion1" href="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                    <h4 class="panel-title">میزان اعتبار سرویس</h4>
+                  </a>
+                  <div id="collapse5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                      <p>این بخش بیانگر اعتبار زمانی سرویس شما است. <br>
+                        بر اساس مبلغی که برای خرید اعتبار سرویس پرداخت کردید، برای سرویس شما اعتباری در نظر گرفته می‌شود. واحد اعتبار سرویس ساختار یافته <strong>ساعت</strong> می‌باشد. سرویس شما به میزان این اعتبار می‌تواند فعال باشد. 
+
+                      </p>
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <a class="panel-heading collapsed" role="tab" id="headingTwo1" data-toggle="collapse" data-parent="#accordion1" href="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                    <h4 class="panel-title">تاریخ اعتبار سرویس</h4>
+                  </a>
+                  <div id="collapse6" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                      <p>بر اساس اعتبار خریداری شده و تاریخ ایجاد سرویس، تاریخ اعتباری برای سرویس شما در نظر گرفته می‌شود بعد از این تاریخ سرویس غیر فعال خواهد شد
+
+                      </p>
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <a class="panel-heading collapsed" role="tab" id="headingTwo1" data-toggle="collapse" data-parent="#accordion1" href="#collapse7" aria-expanded="false" aria-controls="collapse7">
+                    <h4 class="panel-title">کلید سرویس</h4>
+                  </a>
+                  <div id="collapse7" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                      <p>شما با استفاده از این کلید می‌توانید از سرویس استفاده کنید. <br>
+                        برای این کار لازم است در هر درخواست ارسالی به سرویس این کلید را  با عنوان <strong>ApiKey</strong> در header درخواست خود تنظیم کنید. <br>
+                        به بزرگی و کوچکی حروف هنگام تنظیم header درخواست دقت فرمایید. 
+                      </p>
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <a class="panel-heading collapsed" role="tab" id="headingTwo1" data-toggle="collapse" data-parent="#accordion1" href="#collapse8" aria-expanded="false" aria-controls="collapse8">
+                    <h4 class="panel-title">ورودی‌های سرویس</h4>
+                  </a>
+                  <div id="collapse8" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                      <p>این بخش نشان‌دهنده نام متغیرهای ورودی  سرویس است. <br>
+                        شما باید داده‌های خود را در قالب متغیرهایی با این نام ها و در فرمت <strong>json</strong> به سرور و به مسیر <strong>Clustering/</strong> ارسال کنید. <br>
+
+                        اگر نیاز داشتید که داده‌های یک متغیر از این به بعد بررسی نشوند و یا بالعکس، می‌توانید از این بخش تنظیمات لازم را انجام دهید. <br>
+
+                      </p>
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <a class="panel-heading collapsed" role="tab" id="headingTwo1" data-toggle="collapse" data-parent="#accordion1" href="#collapse9" aria-expanded="false" aria-controls="collapse9">
+                    <h4 class="panel-title">نتیجه خوشه بندی</h4>
+                  </a>
+                  <div id="collapse9" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                      <p>در این بخش می‌توانید به صفحه نتایج عملیات خوشه‌بندی داده‌های ارسالی به سرور تا این لحظه دسترسی داشته باشد. 
+
+                      </p>
+                      
+                    </div>
+                  </div>
+                </div>
+                                  
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <!-- <div class="row">
+        <div class="accordion" id="accordion1" role="tablist" aria-multiselectable="true">
+          <div class="panel">
+            <a class="panel-heading collapsed" role="tab" id="headingTwo1" data-toggle="collapse" data-parent="#accordion1" href="#collapse11" aria-expanded="false" aria-controls="collapse1">
+              <h4 class="panel-title">راهنما</h4>
+            </a>
+            <div id="collapse11" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+              <div class="panel-body">
+                <p><strong>راهنمای بررسی وضعیت دو داده</strong>
+                </p>
+                در این قسمت شما می‌توانید با وارد کردن مقادیر دو داده متفاوت، به وضعیت این دو داده 
+                نسبت به هم پی ببرید.                  
+                <br>
+                وضعیت دو داده نسبت به هم شامل متعلق بودن یا نبودن به یک خوشه
+                و همچنین متعلق بودن یا نبودن به یک میکرو خوشه می‌باشد.
+                
+              </div>
+            </div>
+          </div>                  
+        </div>
+      </div> -->
+      <!-- مشخصات . اعتبار -->
+      <div class="row">
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+                <h2>مشخصات سرویس</h2>
+                <ul class="nav navbar-left panel_toolbox">    
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+              <p>مدیریت مشخصات سرویس</p>
+              <br><br>
+              <div>
+                <form id="form-1" class="form-horizontal form-label-right">
+                  <div class="form-group">
+                    <label id="snamelbl">نام سرویس 
+                      <button id="btn-1" class="btn btn-default btn-xs btn-round" style="margin-bottom: -3px;"><i class="fa fa-pencil-square-o text-warning"></i></button>
+                    </label>
+                    <input readOnly id="s-name" name="sname" type="text"  class="form-control" value="<%= serv.BServ.Name.String %>">
+                    
+                    <div class="modal modal-name fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                      <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel2">تغییر نام سرویس</h4>
+                          </div>
+                          <div class="modal-body">
+                            <h4>آیا از تغییر نام سرویس مطمئن هستید؟</h4>                            
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">خیر</button>
+                            <button type="button" class="btn btn-primary" onclick="sendname();return false;" >بله مطمئنم</button>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br><br>
+                  <div class="form-group">
+                    <label>وضعیت سرویس (<% if serv.SServ.Status.Bool {%>فعال<% }else { %>غیرفعال<% } %>)</label>                    
+                  </div>
+                  <div class="form-group">                    
+                    <label>
+                      <input type="checkbox" <% if serv.SServ.Status.Bool {%>checked="checked"<% } %> id="checkactive" name="active" onclick="checkhandle()" class="js-switch" /> <div  style=" display: inline" id="checkmsg"><% if serv.SServ.Status.Bool {%>فعال شود <% }else { %>غیرفعال شود <% } %></div>
+                    </label>
+                  </div>
+                  <br>
+                </form>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-8 col-sm-8 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+                <h2>اعتبار سرویس</h2>
+                <ul class="nav navbar-left panel_toolbox">    
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+              <p>مدیریت اعتبار و کلید سرویس</p>
+              <br>
+              <div >
+                <form class="form-horizontal form-label-right">
+                  
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <label>تاریخ ایجاد سرویس </label>
+                        <input type="text" readOnly class="form-control" value="<%= ptime.ToPersian(serv.BServ.Created.Time) %>">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <label id="s-exp-lbl" >تاریخ انقضای کلید 
+                          <button id="btn-1" class="btn btn-default btn-xs btn-round" style="margin-bottom: -3px;"><i class="fa fa-pencil-square-o text-warning"></i></button>
+                        </label>
+                        <input type="text" readOnly class="form-control" value="<%= ptime.ToPersian(serv.SServ.ExpScheduled.Time) %>">
+                        <div class="modal change-exp-modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                          <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+    
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel2">تغییر تاریخ انقضای کلید</h4>
+                              </div>
+                              <div class="modal-body">
+                                <h4>بعد از اعمال این تغییر کاید سرویس تغییر خواهدکرد و کلید جدید در اختیار شما قرار خواهدگرفت.<br>
+                                  آیا تمایل دارید کلید قبلی معتبر باقی بماند؟
+                                </h4>                            
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">لغو عملیات</button>
+                                <button type="button" class="btn btn-primary" onclick="sendname();return false;" >حفظ اعتبار کلید قبلی</button>
+                                <button type="button" class="btn btn-primary" onclick="sendname();return false;" >نامعتبر شدن کلید قبلی</button>
+                              </div>
+    
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <label>میزان اعتبار سرویس
+                          <button id="btn-14" class="btn btn-default btn-xs btn-round" style="margin-bottom: -3px;"><i class="fa fa-plus text-warning"></i></button>
+                        </label>                          
+                        <input type="text" readOnly class="form-control" value="<%= fmt.Sprint(serv.BServ.Credit.Int32) %> (ساعت)">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <label>تاریخ اعتبار سرویس</label>
+                          <input type="text" readonly="readonly" class="form-control" value="<%= ptime.ToPersian(serv.SServ.Expiration.Time) %>">
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                      <label>کلید سرویس
+                        <button id="btn-1" class="btn btn-default btn-xs btn-round" style="margin-bottom: -3px;"><i class="fa fa-copy text-warning"></i></button>
+                        <button id="btn-1" class="btn btn-default btn-xs btn-round" style="margin-bottom: -3px;"><i class="fa fa-refresh text-warning"></i></button>
+                      </label>
+                      <input type="text" readonly="readonly" class="form-control" value="<%= serv.SServ.JKey %>">                      
+                    </div>
+                  </div>
+
+                  
+                </form>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        
+
+      </div>
+      
+      
+      <div class="clearfix"></div>
+      
+       <!-- متغیر ها . نتیجه -->
+      <div class="row">
+        
+        <div class="col-md-8 col-sm-8 col-xs-12 no-float">
+          <div class="x_panel">
+            <div class="x_title">
+                <h2>ورودی‌های سرویس</h2>
+                <ul class="nav navbar-left panel_toolbox">    
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+              <p>مدیریت متغیرهای ورودی‌</p>
+              <br>
+              <div >
+                <form class="form-horizontal form-label-right">
+                  <% for v , act := range vars.Vars { %>
+                    <div class="item form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="in_0"> نام داده 
+                      </label>                  
+                      <div class="col-md-5 col-sm-5 col-xs-9">
+                        <input id="in_0" type="text"  class="form-control col-md-4 col-xs-9" value="<%= v %>">
+                      </div>                    
+                      <label class="col-md-4 col-sm-4 col-xs-3" for="in_0"><input type="checkbox" class="flat" name="<%= v %>" <% if act { %>checked="checked"<% } %> > <small style="display: inline;">بررسی&nbsp;شود</small>
+                      </label>
+                      
+                    </div>
+                  <% } %>
+                  <div class="ln_solid"></div>
+                  <div class="form-group">
+                    <button id="btn-data" type="button" class="btn btn-success ">اعمال تغییرات</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+                <h2>نتیجه خوشه بندی</h2>
+                <ul class="nav navbar-left panel_toolbox">    
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+              <p>مشاهده نتیجه عملیات خوشه بندی داده‌ها تا این لحظه</p>
+              <br><br>
+              <div class="col-md-12 col-sm-12 col-sm-offset-0 col-xs-6 col-xs-offset-3">
+                <a href="/Service/<%= sid %>/View">
+                  <button id="btn" type="button" class="btn btn-success btn-block"><h5>نتیجه خوشه بندی</h5></button>
+                </a>
+              </div>
+              <br>
+              <div class="clearfix"></div>
+              <br>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      
+      
+
+  </div>
+<% } %>
+
